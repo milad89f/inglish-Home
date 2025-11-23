@@ -1,0 +1,1415 @@
+{
+	"info": {
+		"_postman_id": "inglish-backend-api-collection",
+		"name": "Inglish Backend API",
+		"description": "Complete API collection for Inglish Backend - Language Learning Platform",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "inglish-backend"
+	},
+	"item": [
+		{
+			"name": "Health",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"health"
+							]
+						},
+						"description": "Check API health status"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/v1/health",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"health"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"data\": {\n    \"status\": \"ok\",\n    \"message\": \"Inglish Backend API is running\",\n    \"timestamp\": \"2025-01-19T12:00:00Z\",\n    \"version\": \"1.0.0\"\n  },\n  \"message\": \"API is healthy\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Signup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    var jsonData = pm.response.json();",
+									"    if (jsonData.data && jsonData.data.token) {",
+									"        pm.collectionVariables.set(\"auth_token\", jsonData.data.token);",
+									"        pm.collectionVariables.set(\"user_id\", jsonData.data.user.id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user\": {\n    \"email\": \"user@example.com\",\n    \"password\": \"password123\",\n    \"password_confirmation\": \"password123\",\n    \"name\": \"John Doe\",\n    \"language\": \"en\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/users/signup",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"signup"
+							]
+						},
+						"description": "Register a new user account"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"user\": {\n    \"email\": \"user@example.com\",\n    \"password\": \"password123\",\n    \"password_confirmation\": \"password123\",\n    \"name\": \"John Doe\",\n    \"language\": \"en\"\n  }\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/v1/users/signup",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"signup"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"data\": {\n    \"user\": {\n      \"id\": 1,\n      \"email\": \"user@example.com\",\n      \"name\": \"John Doe\",\n      \"language\": \"en\",\n      \"membership\": \"free\",\n      \"created_at\": \"2025-01-19T12:00:00Z\",\n      \"updated_at\": \"2025-01-19T12:00:00Z\"\n    },\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n    \"expires_at\": \"2025-01-20T12:00:00Z\"\n  },\n  \"message\": \"User created successfully\"\n}"
+						},
+						{
+							"name": "Validation Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"user\": {\n    \"email\": \"invalid-email\",\n    \"password\": \"123\",\n    \"name\": \"\"\n  }\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/v1/users/signup",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"signup"
+									]
+								}
+							},
+							"status": "Unprocessable Entity",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": false,\n  \"message\": \"Validation failed\",\n  \"errors\": {\n    \"email\": [\"is invalid\"],\n    \"password\": [\"is too short (minimum is 6 characters)\"],\n    \"name\": [\"can't be blank\"]\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    if (jsonData.data && jsonData.data.token) {",
+									"        pm.collectionVariables.set(\"auth_token\", jsonData.data.token);",
+									"        pm.collectionVariables.set(\"user_id\", jsonData.data.user.id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user\": {\n    \"email\": \"user@example.com\",\n    \"password\": \"password123\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/users/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"login"
+							]
+						},
+						"description": "Authenticate user and get JWT token"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"user\": {\n    \"email\": \"user@example.com\",\n    \"password\": \"password123\"\n  }\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/v1/users/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"data\": {\n    \"user\": {\n      \"id\": 1,\n      \"email\": \"user@example.com\",\n      \"name\": \"John Doe\",\n      \"language\": \"en\",\n      \"membership\": \"free\",\n      \"created_at\": \"2025-01-19T12:00:00Z\",\n      \"updated_at\": \"2025-01-19T12:00:00Z\"\n    },\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n    \"expires_at\": \"2025-01-20T12:00:00Z\"\n  },\n  \"message\": \"Login successful\"\n}"
+						},
+						{
+							"name": "Invalid Credentials",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"user\": {\n    \"email\": \"user@example.com\",\n    \"password\": \"wrongpassword\"\n  }\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/v1/users/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"login"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": false,\n  \"message\": \"Invalid email or password\",\n  \"errors\": {}\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Current User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/auth/me",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"me"
+							]
+						},
+						"description": "Get current authenticated user information"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/v1/auth/me",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"me"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"data\": {\n    \"user\": {\n      \"id\": 1,\n      \"email\": \"user@example.com\",\n      \"name\": \"John Doe\",\n      \"language\": \"en\",\n      \"membership\": \"free\",\n      \"created_at\": \"2025-01-19T12:00:00Z\",\n      \"updated_at\": \"2025-01-19T12:00:00Z\"\n    }\n  },\n  \"message\": \"Authenticated\"\n}"
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/v1/auth/me",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"me"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": false,\n  \"message\": \"Invalid or expired token\",\n  \"errors\": {}\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get User Courses",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/users/{{user_id}}/courses",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"{{user_id}}",
+								"courses"
+							]
+						},
+						"description": "Get all courses for a specific user (requires authentication, user can only access their own courses)"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/v1/users/1/courses",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"1",
+										"courses"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"title\": \"English for Beginners\",\n      \"description\": \"Learn basic English\",\n      \"language\": \"en\",\n      \"level\": \"beginner\",\n      \"is_published\": true,\n      \"user_id\": 1,\n      \"created_at\": \"2025-01-19T12:00:00Z\",\n      \"updated_at\": \"2025-01-19T12:00:00Z\"\n    }\n  ]\n}"
+						},
+						{
+							"name": "Unauthorized - Different User",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/v1/users/999/courses",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"999",
+										"courses"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": false,\n  \"message\": \"Unauthorized. You can only access your own courses.\",\n  \"errors\": {}\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Courses",
+			"item": [
+				{
+					"name": "Create Course",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"course\": {\n    \"title\": \"Advanced English Grammar\",\n    \"description\": \"Master advanced grammar concepts\",\n    \"language\": \"en\",\n    \"level\": \"advanced\",\n    \"is_published\": true\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/courses",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"courses"
+							]
+						},
+						"description": "Create a new course (requires authentication and premium membership)"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"course\": {\n    \"title\": \"Advanced English Grammar\",\n    \"description\": \"Master advanced grammar concepts\",\n    \"language\": \"en\",\n    \"level\": \"advanced\",\n    \"is_published\": true\n  }\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/v1/courses",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"courses"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": 1,\n    \"title\": \"Advanced English Grammar\",\n    \"description\": \"Master advanced grammar concepts\",\n    \"language\": \"en\",\n    \"level\": \"advanced\",\n    \"is_published\": true,\n    \"user_id\": 1,\n    \"created_at\": \"2025-01-19T12:00:00Z\",\n    \"updated_at\": \"2025-01-19T12:00:00Z\"\n  },\n  \"message\": \"Course created successfully\"\n}"
+						},
+						{
+							"name": "Premium Required",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"course\": {\n    \"title\": \"Advanced English Grammar\",\n    \"description\": \"Master advanced grammar concepts\",\n    \"language\": \"en\",\n    \"level\": \"advanced\"\n  }\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/v1/courses",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"courses"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": false,\n  \"message\": \"This feature requires a premium membership. Please upgrade to access this endpoint.\",\n  \"errors\": {}\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Course by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/courses/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"courses",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Get course details by ID (requires authentication, user can only access their own courses)"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/v1/courses/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"courses",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": 1,\n    \"title\": \"Advanced English Grammar\",\n    \"description\": \"Master advanced grammar concepts\",\n    \"language\": \"en\",\n    \"level\": \"advanced\",\n    \"is_published\": true,\n    \"user_id\": 1,\n    \"created_at\": \"2025-01-19T12:00:00Z\",\n    \"updated_at\": \"2025-01-19T12:00:00Z\",\n    \"user\": {\n      \"id\": 1,\n      \"email\": \"user@example.com\",\n      \"name\": \"John Doe\",\n      \"language\": \"en\",\n      \"membership\": \"premium\",\n      \"created_at\": \"2025-01-19T12:00:00Z\",\n      \"updated_at\": \"2025-01-19T12:00:00Z\"\n    },\n    \"subjects\": [\n      {\n        \"id\": 1,\n        \"name\": \"Present Tenses\",\n        \"description\": \"Learn present tenses\",\n        \"language\": \"en\",\n        \"difficulty\": 1,\n        \"difficulty_label\": \"Easy\",\n        \"position\": 1,\n        \"created_at\": \"2025-01-19T12:00:00Z\",\n        \"updated_at\": \"2025-01-19T12:00:00Z\"\n      }\n    ]\n  }\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/v1/courses/999",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"courses",
+										"999"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": false,\n  \"message\": \"Course not found\",\n  \"errors\": {}\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Course Videos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/courses/:id/videos",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"courses",
+								":id",
+								"videos"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Get all videos for a specific course (requires authentication, user can only access their own courses)"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/v1/courses/1/videos",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"courses",
+										"1",
+										"videos"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"text\": \"Hello, how are you?\",\n      \"language\": \"en\",\n      \"remote_video_url\": \"https://example.com/video.mp4\",\n      \"local_uri\": null,\n      \"video_type\": \"did\",\n      \"position\": 1,\n      \"did_talk_id\": \"abc123\",\n      \"user_id\": 1,\n      \"course_id\": 1,\n      \"subject_id\": 1,\n      \"created_at\": \"2025-01-19T12:00:00Z\",\n      \"updated_at\": \"2025-01-19T12:00:00Z\",\n      \"is_idle\": false,\n      \"is_success\": true,\n      \"is_retry\": false\n    }\n  ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Course Reports",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/courses/:id/reports",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"courses",
+								":id",
+								"reports"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Get all reports for a specific course (requires authentication, user can only access their own courses)"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/v1/courses/1/reports",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"courses",
+										"1",
+										"reports"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"accuracy\": 85.5,\n      \"reference_text\": \"Hello, how are you?\",\n      \"transcribed_text\": \"Hello, how are you?\",\n      \"incorrect_words\": [],\n      \"word_details\": [],\n      \"audio_duration\": 2.5,\n      \"accuracy_level\": \"good\",\n      \"perfect\": false,\n      \"good\": true,\n      \"needs_practice\": false,\n      \"user_id\": 1,\n      \"video_id\": 1,\n      \"course_id\": 1,\n      \"created_at\": \"2025-01-19T12:00:00Z\",\n      \"updated_at\": \"2025-01-19T12:00:00Z\"\n    }\n  ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Course Subjects",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/courses/:id/subjects",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"courses",
+								":id",
+								"subjects"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Get all subjects for a specific course (requires authentication, user can only access their own courses)"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/v1/courses/1/subjects",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"courses",
+										"1",
+										"subjects"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"name\": \"Present Tenses\",\n      \"description\": \"Learn present tenses\",\n      \"language\": \"en\",\n      \"difficulty\": 1,\n      \"difficulty_label\": \"Easy\",\n      \"position\": 1,\n      \"created_at\": \"2025-01-19T12:00:00Z\",\n      \"updated_at\": \"2025-01-19T12:00:00Z\"\n    },\n    {\n      \"id\": 2,\n      \"name\": \"Past Tenses\",\n      \"description\": \"Learn past tenses\",\n      \"language\": \"en\",\n      \"difficulty\": 2,\n      \"difficulty_label\": \"Medium\",\n      \"position\": 2,\n      \"created_at\": \"2025-01-19T12:00:00Z\",\n      \"updated_at\": \"2025-01-19T12:00:00Z\"\n    }\n  ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "LLM (Premium Only)",
+			"item": [
+				{
+					"name": "Generate Analysis",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"report_data\": {\n    \"total_sessions\": 15,\n    \"avg_accuracy\": 85.5,\n    \"improvement_rate\": 12.3\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/llm/analysis",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"llm",
+								"analysis"
+							]
+						},
+						"description": "Generate AI-powered analysis for user performance (requires authentication and premium membership)"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"report_data\": {}\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/v1/llm/analysis",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"llm",
+										"analysis"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"data\": {\n    \"analysis_text\": \"Based on your recent performance data, here's a comprehensive analysis:\\n\\n**Overall Performance**: You've shown consistent improvement in pronunciation accuracy.\\n\\n**Strengths**:\\n- Excellent progress in vowel sounds\\n- Strong performance in basic vocabulary\\n- Good consistency in practice sessions\\n\\n**Areas for Improvement**:\\n- Focus on consonant clusters\\n- Practice stress patterns in multi-syllable words\\n- Work on intonation in questions\\n\\n**Recommendations**:\\n- Continue practicing with intermediate-level content\\n- Review subjects 3-5 for reinforcement\\n- Try recording yourself to compare with native speakers\\n\\n**Next Steps**:\\nConsider moving to the next difficulty level in 2-3 weeks if current progress continues.\",\n    \"generated_at\": \"2025-01-19T12:00:00Z\",\n    \"user_id\": 1\n  },\n  \"message\": \"Analysis generated successfully\"\n}"
+						},
+						{
+							"name": "Premium Required",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"report_data\": {}\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/v1/llm/analysis",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"llm",
+										"analysis"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": false,\n  \"message\": \"This feature requires a premium membership. Please upgrade to access this endpoint.\",\n  \"errors\": {}\n}"
+						}
+					]
+				},
+				{
+					"name": "Generate Report",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"llm\": {\n    \"course_id\": 1,\n    \"performance_metrics\": {\n      \"total_sessions\": 15,\n      \"avg_accuracy\": 85.5,\n      \"improvement_rate\": 12.3\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/llm/report",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"llm",
+								"report"
+							]
+						},
+						"description": "Generate AI-powered detailed learning report (requires authentication and premium membership)"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"llm\": {\n    \"course_id\": 1,\n    \"performance_metrics\": {}\n  }\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/v1/llm/report",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"llm",
+										"report"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"data\": {\n    \"report_text\": \"# Learning Progress Report\\n\\n## Executive Summary\\nThis report analyzes your learning journey and provides insights into your progress.\\n\\n## Performance Overview\\n- **Total Practice Sessions**: 15\\n- **Average Accuracy**: 85.5%\\n- **Improvement Rate**: 12.3%\\n\\n## Detailed Analysis\\n\\n### Week-by-Week Progress\\nWeek 1: Initial accuracy of 72% with focus on basic sounds.\\nWeek 2: Improved to 78% with better vowel pronunciation.\\nWeek 3: Reached 85% accuracy, showing mastery of intermediate concepts.\\n\\n### Subject Performance\\n- **Grammar**: Strong performance (88% average)\\n- **Vocabulary**: Good progress (82% average)\\n- **Pronunciation**: Needs attention (75% average)\\n\\n### Recommendations\\n1. Continue with current course structure\\n2. Add extra practice for pronunciation exercises\\n3. Review challenging subjects weekly\\n\\n## Conclusion\\nYou're making excellent progress! Keep up the consistent practice.\",\n    \"generated_at\": \"2025-01-19T12:00:00Z\",\n    \"user_id\": 1,\n    \"course_id\": 1\n  },\n  \"message\": \"Report generated successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Generate Subject",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"llm\": {\n    \"course_id\": 1,\n    \"name\": \"Advanced Grammar Structures\",\n    \"difficulty\": 2,\n    \"language\": \"en\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/llm/subject",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"llm",
+								"subject"
+							]
+						},
+						"description": "Generate AI-powered subject content (requires authentication and premium membership)"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"llm\": {\n    \"course_id\": 1,\n    \"name\": \"Advanced Grammar Structures\",\n    \"difficulty\": 2,\n    \"language\": \"en\"\n  }\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/v1/llm/subject",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"llm",
+										"subject"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"data\": {\n    \"subject_name\": \"Advanced Grammar Structures\",\n    \"subject_content\": \"# Advanced Grammar Structures\\n\\n## Overview\\nThis subject covers essential concepts for improving your language skills.\\n\\n## Learning Objectives\\n- Master key grammatical structures\\n- Understand usage in context\\n- Practice through interactive exercises\\n\\n## Content Structure\\n\\n### Lesson 1: Introduction\\nLearn the fundamentals and build a strong foundation.\\n\\n### Lesson 2: Practice Exercises\\nApply what you've learned through structured practice.\\n\\n### Lesson 3: Advanced Concepts\\nExplore more complex topics and real-world applications.\\n\\n## Difficulty Level\\nThis subject is rated as Medium difficulty.\\n\\n## Expected Duration\\nComplete this subject in approximately 2-3 hours of focused study.\\n\\n## Tips for Success\\n- Practice daily for best results\\n- Review previous lessons before moving forward\\n- Use the pronunciation exercises to improve accuracy\",\n    \"difficulty\": 2,\n    \"language\": \"en\",\n    \"generated_at\": \"2025-01-19T12:00:00Z\",\n    \"course_id\": 1\n  },\n  \"message\": \"Subject generated successfully\"\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "auth_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user_id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
+

@@ -1,0 +1,46 @@
+{
+  "expo": {
+    "name": "English Home Practice",
+    "slug": "avatar-tts-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.avatartts.app",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "This app needs access to your microphone to record your pronunciation for practice."
+      }
+    },
+    "android": {
+      "package": "com.avatartts.app",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-av"
+    ],
+    "developmentClient": {
+      "silentLaunch": true
+    },
+    "packagerOpts": {
+      "port": 8081
+    },
+    "expo": {
+      "scheme": "avatar-tts-app"
+    }
+  }
+}

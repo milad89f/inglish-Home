@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Expo
+.expo/
+dist/
+web-build/
+
+# OS
+.DS_Store
+*.pem
+Thumbs.db
+
+# Debug
+*.log
+npm-install.log
+npm-install-legacy.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.code-workspace
+
+# Build
+*.apk
+*.aab
+*.ipa
+*.app
+
+# Local files
+*.local
+.env
+
+# Cache
+.cache/
+tmp/
+temp/
+
+# Metro bundler
+.metro/

@@ -1,0 +1,6 @@
+# This directory will contain generated swagger.yaml files
+# Run: bundle exec rake rswag:specs:swaggerize
+
+
+
+

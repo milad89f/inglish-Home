@@ -1,0 +1,46 @@
+{
+  "name": "avatar-tts-app",
+  "version": "1.0.0",
+  "description": "English Home Practice - Language learning app with AI avatar videos and pronunciation feedback",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start --port 8081",
+    "android": "expo start --android --port 8081",
+    "ios": "expo start --ios --port 8081",
+    "web": "expo start --web --port 8081",
+    "tunnel": "expo start --tunnel",
+    "clear": "expo start --clear"
+  },
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "^2.2.0",
+    "@react-native-community/netinfo": "^11.4.1",
+    "axios": "^1.12.2",
+    "expo": "~54.0.0",
+    "expo-av": "~16.0.7",
+    "expo-file-system": "^19.0.17",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-get-random-values": "~1.11.0",
+    "react-native-safe-area-context": "^5.6.1",
+    "react-native-web": "^0.21.0",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "avatar",
+    "text-to-speech",
+    "ai",
+    "d-id",
+    "elevenlabs",
+    "turkish",
+    "english"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "private": true
+}
